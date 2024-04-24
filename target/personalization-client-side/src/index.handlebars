@@ -28,6 +28,7 @@
     (window,["alloy"]);
 
     alloy("configure", {
+      "edgeBasePath": "ee-pre-prd",
       "edgeConfigId": "{{edgeConfigId}}",
       "orgId":"{{orgId}}",
       "context": ["web"],
@@ -45,22 +46,27 @@
       {
         "renderDecisions": false,
         decisionScopes: [demoDecisionScopeName],
-        "xdm": FPID ? {
-          identityMap: {
-            "FPID": [FPID]
+        edgeConfigOverrides: {
+          com_adobe_experience_platform: {
+            enabled: false
           }
-        } : {}
+        },
+        "xdm": {
+          "eventType": "top-collection"
+        }
       }
     ).then(applyPersonalization(demoDecisionScopeName)).catch(displayError);
 
     alloy("sendEvent",
       {
-        "xdm": FPID ? {
-          identityMap: {
-            "FPID": [FPID]
-          },
+        edgeConfigOverrides: {
+          com_adobe_target: {
+            enabled: false
+          }
+        },
+        "xdm": {
           "eventType": "bottom-collection"
-        } : {}
+        }
       }
     );
   </script>
