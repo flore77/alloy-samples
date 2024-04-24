@@ -43,7 +43,7 @@
 
     alloy("sendEvent",
       {
-        "renderDecisions": true,
+        "renderDecisions": false,
         decisionScopes: [demoDecisionScopeName],
         "xdm": FPID ? {
           identityMap: {
@@ -52,6 +52,17 @@
         } : {}
       }
     ).then(applyPersonalization(demoDecisionScopeName)).catch(displayError);
+
+    alloy("sendEvent",
+      {
+        "xdm": FPID ? {
+          identityMap: {
+            "FPID": [FPID]
+          },
+          "eventType": "bottom-collection"
+        } : {}
+      }
+    );
   </script>
 </head>
 <body>

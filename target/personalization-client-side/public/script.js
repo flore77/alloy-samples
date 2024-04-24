@@ -62,19 +62,23 @@ function applyPersonalization(decisionScopeName) {
     const { propositions = [], decisions = [] } = result;
 
     // send display event for the decision scope / target mbox
-    decisions.forEach((decision) => sendDisplayEvent(decision));
+    // decisions.forEach((decision) => sendDisplayEvent(decision));
 
-    const mbox = propositions.find(
-      (proposition) => proposition.scope === decisionScopeName
-    );
+    // const mbox = propositions.find(
+    //   (proposition) => proposition.scope === decisionScopeName
+    // );
+
+    const mbox = true;
 
     if (mbox) {
+      // console.log(JSON.stringify(mbox));
       const element = document.querySelector("img.target-offer");
 
       const {
         buttonActions = [],
         heroImageName = "demo-marketing-offer1-default.png",
-      } = mbox.items[0].data.content;
+      // } = mbox.items[0].data.content;
+      } = personalizationContent;
 
       updateButtons(buttonActions);
 
@@ -94,3 +98,24 @@ function displayError(err) {
                                       <div class="alert alert-danger" role="alert">${err.message}</div>
                                     </div>`;
 }
+
+const personalizationContent =  {
+  heroImageName: "demo-marketing-offer1-exp-B.png",
+  buttonActions: [
+    {
+      "id": 1,
+      "text": "Buy now and Save 20%",
+      "content": "Thank you for your purchase!"
+    },
+    {
+      "id": 2,
+      "text": "Subscribe to the Pod",
+      "content": "Thank you for subscribing!"
+    },
+    {
+      "id": 3,
+      "text": "Get FREE stuff",
+      "content": "Use coupon code THANKYOU at checkout."
+    }
+  ]
+};
